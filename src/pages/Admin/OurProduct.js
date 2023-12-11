@@ -12,6 +12,8 @@ import useCart from '../../hooks/useCart';
 import { Dropdown } from 'rsuite';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import SearchIcon from '@rsuite/icons/Search';
+
 export const ConfirmBtn = styled.button`
     background: #355E3B;
     border-radius: 2px;
@@ -104,7 +106,7 @@ const OurItem = (props) => {
         setPostDate(formatDate(props.post_date));
         setPrice(props.sale_price);
         // console.log(props.post_date)
-    }, []);
+    }, [props]);
 
     return (
         <div className='col-sm-3 d-grid my-2'>
@@ -146,16 +148,19 @@ function OurProduct() {
     const { dailydeal_list, setDailyDealList } = useCart();
     const [loading, setLoading] = useState(true);
     const [sortTitle, setSortTitle] = useState('Date');
-
+    const [searchTemp, SetSearchTemp] = useState("");
+    const [searchKey, SetSearchKey] = useState("");
     const loadData = () => {
+        console.log("serach", searchKey)
         const configP = {
             method: 'get',
-            url: base_url + `ourproduct?pageSize=16&page=1`,
+            url: base_url + `ourproduct?pageSize=16&page=1&sort=${sortTitle}&search=${searchKey}`,
         }
         // console.log(configP)
         axios(configP)
             .then((result) => {
                 setDailyDealList(result.data);
+                console.log(result.data)
                 setLoading(false);
                 page = 1;
             })
@@ -167,7 +172,9 @@ function OurProduct() {
             url: base_url + 'ourproduct',
             params: {
                 pageSize: 16,
-                page: page
+                page: page,
+                sort: sortTitle,
+                search: searchKey,
             }
         };
         axios(configuration).then((res) => {
@@ -178,8 +185,7 @@ function OurProduct() {
     }
     useEffect(() => {
         loadData();
-
-    }, []);
+    }, [sortTitle, searchKey]);
 
     const showMore = () => {
         page += 1;
@@ -193,31 +199,39 @@ function OurProduct() {
         console.log(e)
         setSortTitle(e)
     }
+
+    const search = async () => {
+        SetSearchKey(searchTemp);
+    }
+
     return (
         <>
             <h2>DailyDeal products</h2>
             <div className='d-flex justify-content-between align-items-center'>
                 <h5>{dailydeal_list.length} product(s) found.</h5>
-                <div className='d-flex align-items-center'>
-                    <h5>sort by</h5>
-                    <Dropdown title={sortTitle} onSelect={(e) => handleSort(e)}>
-                        <Dropdown.Item eventKey='Location'>Location</Dropdown.Item>
+                <div className='d-flex align-items-center gap-2'>
+                    {/* <h5>sort by</h5> */}
+                    <Dropdown title={sortTitle} style={{ border: "1px solid lightgray", borderRadius: "5px" }} onSelect={(e) => handleSort(e)}>
+                        {/* <Dropdown.Item eventKey='Location'>Location</Dropdown.Item> */}
                         <Dropdown.Item eventKey='Date'>Date</Dropdown.Item>
                         <Dropdown.Item eventKey='Price'>Price</Dropdown.Item>
-                        <Dropdown.Item eventKey='Status'>Status</Dropdown.Item>
-                        <Dropdown.Item eventKey='Product'>Product</Dropdown.Item>
+                        {/* <Dropdown.Item eventKey='Status'>Status</Dropdown.Item> */}
+                        <Dropdown.Item eventKey='Name'>Name</Dropdown.Item>
                     </Dropdown>
+                    <input value={searchTemp} style={{height: "40px"}} onChange={(e) => { SetSearchTemp(e.target.value) }} />
+                    <button style={{ border: "1px solid lightgray", borderRadius: "5px", height: "40px"}} onClick={search}><SearchIcon />Search</button>
                 </div>
             </div>
             <div className='row'>
                 {
-                    dailydeal_list.map((item, index) => (
-                        <OurItem {...item} key={index} />
-                    ))
+                    dailydeal_list.map((item, index) => {
+                        // console.log(item.sale_price);
+                        return <OurItem {...item} key={index} />
+                    })
                 }
                 <ToastContainer autoClose={2000} />
             </div>
-            <ShowButton className='d-flex m-auto' disabled={loading} style={{ width: 'auto', height: 'auto', padding: 10 }} onClick={showMore}>
+            <ShowButton className='d-flex m-auto' disabled={loading || dailydeal_list.length < 16} style={{ width: 'auto', height: 'auto', padding: 10 }} onClick={showMore}>
                 {
                     loading ?
                         <div className="spinner-border spinner-border-sm text-dark" role="status"></div>

@@ -88,8 +88,8 @@ function CartItem(props) {
     const [stock, setStock] = useState();
 
     const handleRemove = (id, quantity) => {
-    props.handlePrice(-props.product_price * quantity, 0)
-    props.removeItem(id, quantity);
+        props.handlePrice(-props.product_price * quantity, 0)
+        props.removeItem(id, quantity);
     }
 
     useEffect(() => {
@@ -105,7 +105,6 @@ function CartItem(props) {
             setPrice(-props.product_price);
             updateCartItem(props.product_id, quantity, -1);
         }
-
     }
     const increase = () => {
         // setQuantity(quantity + 1)
@@ -115,15 +114,17 @@ function CartItem(props) {
                 setPrice(props.product_price);
                 updateCartItem(props.product_id, quantity, 1);
             }
-            else { 
+            else {
                 notification('You can phurcase only three quantities.');
             }
-        else{
+        else {
             notification('There arenot more stocks');
         }
     }
 
-    props.handlePrice(props.product_price * quantity, quantity)
+    useEffect(() => {
+        props.handlePrice(props.product_price * quantity, quantity)
+    }, [quantity]);
     return (
         <>
             <ToastContainer autoClose={2000} />

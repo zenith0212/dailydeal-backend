@@ -34,7 +34,6 @@ const useCart = () => {
         setState(state =>({...state, reviewCount: count}))
     }
     // setState(state => ({...state, count: cart_list.lenth}));
-    
     return {
         setPrice,
         setCount,
@@ -48,8 +47,8 @@ const useCart = () => {
         ydeal_available: state.ydeal_available,
         order_count: state.order_count,
         dailydeal_list: state.dailydeal_list,
-        admin_permission:state.admin_permission,
-        reviewCount:state.reviewCount
+        admin_permission: state.admin_permission,
+        reviewCount: state.reviewCount
     }
 }
 

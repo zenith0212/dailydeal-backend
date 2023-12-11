@@ -228,8 +228,8 @@ function Review(props) {
                 date: formatDate(today)
             }
         }
-        axios(config).
-            then((result) => {
+        axios(config)
+            .then((result) => {
                 notification(result.data.message);
             })
 
@@ -237,28 +237,31 @@ function Review(props) {
     }
 
     const getReviews = async () => {
-        await axios({ method: 'get', url: base_url + 'review', params: { product_name: prouduct_name } })
-            .then((result) => {
-                let sum = 0.0;
-                // var item
-                setReviewList(result.data);
-                setReviewCount(result.data.length);
-                for (var i = 0; i < result.data.length; i++) {
-                    // item = result.data[i].mark
-                    sum += result.data[i].mark
-                }
-                // console.log("======>",sum);
-                setAverageMark(sum / result.data.length);
-                setLoading(false);
-            }).catch((error) => {
-                console.log(error);
-            })
+        if (prouduct_name) {
+            await axios({ method: 'get', url: base_url + 'review', params: { product_name: prouduct_name } })
+                .then((result) => {
+                    let sum = 0.0;
+                    // var item
+                    setReviewList(result.data);
+                    setReviewCount(result.data.length);
+                    for (var i = 0; i < result.data.length; i++) {
+                        // item = result.data[i].mark
+                        sum += result.data[i].mark
+                    }
+                    // console.log("======>",sum);
+                    console.log(sum , result.data.length)
+                    setAverageMark(result.data.length ? sum / result.data.length : 0);
+                    setLoading(false);
+                }).catch((error) => {
+                    console.log(error);
+                })
+        }
     }
     useEffect(() => {
         getReviews();
 
     }, [prouduct_name])
-
+    console.log(typeof averageMark, Math.round(averageMark), averageMark.toFixed(2))
     return (
         <div>
             {
@@ -271,8 +274,8 @@ function Review(props) {
                             <div className="">
                                 <label>Costomer Reviews</label>
                                 <div className="d-flex">
-                                    <Rate readOnly allowHalf defaultValue={Math.round(averageMark)} color='green' />
-                                    <ReviewMark>({averageMark.toFixed(1)}/5)</ReviewMark>
+                                    <Rate readOnly allowHalf defaultValue={averageMark ? Math.round(averageMark) : 0} color='green' />
+                                    <ReviewMark>{averageMark ? averageMark.toFixed(2) : 0}/5</ReviewMark>
                                 </div>
                             </div>
                             <div className="d-flex align-items-center">

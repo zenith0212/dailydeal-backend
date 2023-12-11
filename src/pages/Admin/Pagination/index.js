@@ -11,9 +11,10 @@ import { Input, InputGroup, Whisper, Tooltip } from 'rsuite';
 import SearchIcon from '@rsuite/icons/Search';
 import { BiDollar } from 'react-icons/bi';
 import { ReactComponent as Loading } from '../../../asset/Gear.svg';
-import {notification} from '../../../actions/notificantion'
+import { notification } from '../../../actions/notificantion'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import { Dropdown } from 'rsuite';
 
 export const Button = styled.button`
     background: #355E3B;
@@ -87,7 +88,7 @@ const ProductItem = (props) => {
         <div className='col-sm-3 d-grid my-2'>
             <AdminCard className='bg-white p-2'>
                 <div className='d-flex justify-content-center' style={{ height: '16rem' }}>
-                    <Link to={"/products/" + props.name} state={{ data: id, type:"gateway" }}>
+                    <Link to={"/products/" + props.name} state={{ data: id, type: "gateway" }}>
                         <LazyLoadImage src={props.images[0].src} alt='product_image' className='h-100' style={{ maxWidth: '100%' }} />
                     </Link>
                 </div>
@@ -131,58 +132,88 @@ const ProductItem = (props) => {
     )
 }
 
-function Items({currentItems}) {
-    // console.log("==============>", currentItems)
-    const [loading, setLoading] = useState(false);
+// function Items({ currentItems }) {
+//     // console.log("==============>", currentItems)
+//     const [loading, setLoading] = useState(false);
 
-    const update = async() =>{
+//     const update = async () => {
+
+//         setLoading(true);
+//         try {
+//             const noti = await axios({ url: base_url + 'brandgateway', method: 'post' })
+//             notification(noti.data.message);
+//         }
+//         catch (error) {
+//             alert(error.response.data.message);
+//             notification("err");
+//         }
+//         setLoading(false);
+//     }
+//     return (
+//         <>
+//             <div className='row'>
+//                 <div className='d-flex justify-content-between'>
+//                     <h2>BrandGrateway products</h2>
+//                     <div className='d-flex gap-2 align-items-center'>
+//                         <input style={{ height: "70%" }} />
+//                         <button style={{ height: "80%" }}><SearchIcon />Search</button>
+//                         <h5>sort by</h5>
+//                         <Dropdown title={sortById} onSelect={(e) => handleSort(e)}>
+//                             <Dropdown.Item eventKey='Location'>Location</Dropdown.Item>
+//                             <Dropdown.Item eventKey='Date'>Date</Dropdown.Item>
+//                             <Dropdown.Item eventKey='Price'>Price</Dropdown.Item>
+//                             <Dropdown.Item eventKey='Status'>Status</Dropdown.Item>
+//                             <Dropdown.Item eventKey='Product'>Product</Dropdown.Item>
+//                         </Dropdown>
+//                         <button style={{ height: "80%" }} onClick={update}>Update</button>
+//                     </div>
+//                 </div>
+//                 {
+//                     loading ? <Loading /> :
+//                         // console.log(currentItems)
+//                         currentItems.map((item) => (
+//                             // console.log("ITem", item)
+//                             <ProductItem {...item} key={item.id} />
+//                         ))
+//                 }
+//                 <ToastContainer autoClose={2000} />
+//             </div>
+//         </>
+//     );
+// }
+
+function PaginatedItems({ itemsPerPage }) {
+
+    const [products, setProducts] = useState([]);
+    const [productCount, setProductCount] = useState();
+    const [page, setPage] = useState(1);
+    const [sortById, setSortById] = useState("Date");
+    const [sortOrder, SetSortOrder] = useState("Asc");
+    const [searchTemp, SetSearchTemp] = useState("");
+    const [searchKey, SetSearchKey] = useState("");
+    // const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [limit, setLimit] = useState(16);
+    // const [loading, setLoading] = useState(false);
+
+    const update = async () => {
 
         setLoading(true);
-        try{
-            const noti = await axios({url:base_url+'brandgateway', method:'post'})
+        try {
+            const noti = await axios({ url: base_url + 'brandgateway', method: 'post' })
             notification(noti.data.message);
         }
-        catch(error){
+        catch (error) {
             alert(error.response.data.message);
             notification("err");
         }
         setLoading(false);
     }
-    return (
-        <>
-            <div className='row'>
-                <div className='d-flex justify-content-between'>
-                    <h2>BrandGrateway products</h2>
-                    <div className='d-flex gap-2 align-items-center'>
-                        <input  style={{height: "70%"}}/>
-                        <button style={{height: "80%"}}><SearchIcon/>Search</button>
-                        <button  style={{height: "80%"}} onClick={update}>Update</button>
-                    </div>
-                </div>
-                {
-                    loading?<Loading/>:
-                    // console.log(currentItems)
-                    currentItems.map((item) => (
-                        // console.log("ITem", item)
-                        <ProductItem {...item} key={item.id} />
-                    ))
-                }
-                <ToastContainer autoClose={2000} />
-            </div>
-        </>
-    );
-}
 
-function PaginatedItems({ itemsPerPage }) {
-    
-    const [products, setProducts] = useState([]);
-    const [productCount, setProductCount] = useState();
-    const [page, setPage] = useState(1);
-    const [sortById, setSortById] = useState();
-    const [sortOrder, SetSortOrder] = useState();
-    // const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [limit, setLimit] = useState(16);
+    const search = async () => {
+        setLoading(true);
+        SetSearchKey(searchTemp);
+    }
 
     // Simulate fetching items from another resources.
     // (This could be items from props; or items loaded in a local state
@@ -241,23 +272,24 @@ function PaginatedItems({ itemsPerPage }) {
     //         setAllProducts(all_products);
     // }
     useEffect(() => {
-        // getProductList();
-        const getBrandProducts = async () =>{
+        const getBrandProducts = async () => {
 
             try {
-                const productCount = await axios({url: base_url+'brandgateway/count', method:'get'});         
-                const products = await axios({url: base_url+'brandgateway', method:'get', params:{page, limit, sortById, sortOrder}})
-                
+                const productCount = await axios({ url: base_url + 'brandgateway/count', method: 'get', params: { page, limit, sortById, sortOrder, searchKey } });
+                const products = await axios({ url: base_url + 'brandgateway', method: 'get', params: { page, limit, sortById, sortOrder, searchKey } })
+
                 setProductCount(productCount.data.count);
                 setProducts(products.data);
                 setLoading(false);
                 console.log("zenith ======>", products.data)
-            } catch(err){
+            } catch (err) {
                 alert(err);
             }
         }
-        getBrandProducts();
-    }, [page])
+        if (page !== NaN) {
+            getBrandProducts();
+        }
+    }, [page, searchKey])
 
     const pageCount = Math.ceil(productCount / itemsPerPage);
 
@@ -267,12 +299,41 @@ function PaginatedItems({ itemsPerPage }) {
         setPage(event.selected + 1);
     };
 
+    const handleSort = (e) => {
+        console.log(e)
+        setSortById(e)
+    }
+
     return (
         <>
             {
-                loading ? <Loading />:
-                    <div>
-                        <Items currentItems={products} />
+                loading ? <Loading /> :
+                    <div className='d-flex flex-column align-items-center'>
+                        {/* <Items currentItems={products} /> */}
+                        <div className='row mb-5'>
+                            <div className='d-flex justify-content-between'>
+                                <h2>BrandGrateway products</h2>
+                                <div className='d-flex gap-2 align-items-center'>
+                                    {/* <Dropdown title={sortById} onSelect={(e) => handleSort(e)}>
+                                        <Dropdown.Item eventKey='Location'>Location</Dropdown.Item>
+                                        <Dropdown.Item eventKey='Price'>Price</Dropdown.Item>
+                                        <Dropdown.Item eventKey='Status'>Status</Dropdown.Item>
+                                        <Dropdown.Item eventKey='Product'>Product</Dropdown.Item>
+                                    </Dropdown> */}
+                                    <input value={searchTemp} onChange={(e) => { SetSearchTemp(e.target.value) }} />
+                                    <button style={{ backgroundColor: "goldenrodyellow" }} onClick={search}><SearchIcon />Search</button>
+
+                                    <button style={{ backgroundColor: "goldenrodyellow" }} onClick={update}>Update</button>
+                                </div>
+                            </div>
+                            {
+                                loading ? <Loading /> :
+                                    products.map((item) => (
+                                        <ProductItem {...item} key={item.id} />
+                                    ))
+                            }
+                            <ToastContainer autoClose={2000} />
+                        </div>
                         <ReactPaginate
                             nextLabel="next >"
                             onPageChange={handlePageClick}
@@ -292,7 +353,12 @@ function PaginatedItems({ itemsPerPage }) {
                             containerClassName="pagination"
                             activeClassName="active"
                             renderOnZeroPageCount={null}
+                            forcePage={page? page - 1: 0}
                         />
+                        <div className='d-flex gap-3 mb-5'>
+                            <input type='number' onChange={(e) => {setPage(parseInt(e.target.value))}}/>
+                            {/* <button>Go to </button> */}
+                        </div>
                     </div>
             }
         </>
@@ -300,6 +366,7 @@ function PaginatedItems({ itemsPerPage }) {
 }
 
 function BrandsGateway() {
+    console.log("what is error");
     return (
         <PaginatedItems itemsPerPage={16} />
     )
