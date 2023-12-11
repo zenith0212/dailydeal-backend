@@ -1,0 +1,59 @@
+#carousel
+  position: relative
+  height: 400px
+  top: 50%
+  overflow: hidden
+  padding: 40px
+
+  div
+    position: absolute
+    transition: transform 1s, left 1s, opacity 1s, z-index 0s
+    opacity: 1
+    background: #F5F7FA
+
+    img
+      width: 450px
+      transition: width 1s
+
+    &.hideLeft
+      left: 10%
+      opacity: 0
+      transform: translateY(50%) translateX(-50%)
+
+      img
+        width: 200px
+
+    &.hideRight
+      left: 90%
+      opacity: 0
+      transform: translateY(50%) translateX(-50%)
+      img
+        width: 200px
+
+    &.prev
+      z-index: 2
+      left: 20%
+      transform: translateY(50px) translateX(-50%)
+
+      img
+        width: 300px
+
+    &.selected
+      z-index: 3
+      left: 50%
+      transform: translateY(0px) translateX(-50%)
+
+    &.next
+      z-index: 2
+      left: 80%
+      transform: translateY(50px) translateX(-50%)
+
+      img
+        width: 300px
+
+.buttons
+  display: flex
+
+svg.active
+  path
+    stroke: #355E3B

@@ -1,0 +1,205 @@
+@import "//netdna.bootstrapcdn.com/font-awesome/3.0/css/font-awesome.css";
+iframe#webpack-dev-server-client-overlay{display:none!important}
+
+.apexcharts-toolbar {
+  display: none !important;
+}
+.kep-login-facebook{
+  font-family: 'Inter'!important;
+  font-size: 14px !important;
+  color:rgba(0, 0, 0, 0.54) !important;
+  background: transparent !important;
+  font-weight: 500 !important;
+  border:1px solid transparent !important;
+  border-radius: 2px !important;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px 0px, rgba(0, 0, 0, 0.24) 0px 0px 1px 0px;
+  padding: 10px !important;
+  width: 100%;
+  height:100%;
+  text-transform: none !important;
+  display: flex !important;
+  gap: 10px;
+}
+.App {
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+  color: #4d4d4d !important;
+}
+
+a:hover {
+  text-decoration: none !important;
+}
+
+input:focus-visible {
+  outline: none;
+}
+
+.error {
+  color: red;
+}
+
+.expired-notice {
+  text-align: center;
+  padding: 2rem;
+  border: 1px solid #ebebeb;
+  border-radius: 0.25rem;
+  margin: 0.5rem;
+}
+
+.expired-notice>span {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: red;
+}
+
+.expired-notice>p {
+  font-size: 1.5rem;
+}
+
+.show-counter {
+  padding: 0.5rem;
+}
+
+.show-counter .countdown-link {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  padding: 0.5rem;
+  /* border: 1px solid #ebebeb;
+  border-radius: 0.25rem; */
+  text-decoration: none;
+  color: #000;
+}
+
+.show-counter .countdown {
+  line-height: 1.25rem;
+  /* padding: 0 0.75rem 0 0.75rem; */
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.show-counter .countdown.danger {
+  color: #ff0000;
+}
+
+.show-counter .countdown>p {
+  margin: 0;
+}
+
+.show-counter .countdown>span {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+
+/* Slider */
+
+.MultiCarousel {
+  float: left;
+  overflow: hidden;
+  padding: 15px;
+  width: 100%;
+  position: relative;
+}
+
+.MultiCarousel .MultiCarousel-inner {
+  transition: 1s ease all;
+  float: left;
+}
+
+.MultiCarousel .MultiCarousel-inner .item {
+  float: left;
+}
+
+.MultiCarousel .MultiCarousel-inner .item>div {
+  text-align: center;
+  padding: 10px;
+  margin: 10px;
+  color: #666;
+}
+
+.MultiCarousel .leftLst,
+.MultiCarousel .rightLst {
+  position: absolute;
+  top: 10%;
+}
+
+.MultiCarousel .leftLst {
+  right: 50px;
+}
+
+.MultiCarousel .rightLst {
+  right: 0;
+}
+
+.MultiCarousel .leftLst.over,
+.MultiCarousel .rightLst.over {
+  pointer-events: none;
+  color: #666;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+
+  /* Center slide text vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal-backdrop.newBackdrop {
+  opacity: 0 !important;
+}
+
+.header .modal-dialog {
+  position: absolute;
+  right: 5%;
+  top: 40px;
+  max-width: 200px;
+}
+
+.register .modal-dialog {
+  max-width: 80%;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.react-tel-input .form-control {
+  height: 100% !important;
+  width: 100% !important;
+  border: none !important;
+  border-bottom: 1px solid #D2DBE3 !important;
+  filter: drop-shadow(0px 2px 6px rgba(19, 18, 66, 0.07));
+
+}
+
+@media only screen and (max-width:768px){
+  .register .modal-dialog {
+    max-width: 100%;
+  }
+}
