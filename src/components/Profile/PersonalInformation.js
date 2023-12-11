@@ -55,7 +55,7 @@ function PersonalInformation() {
         }
         await axios(conf).then((result) => {
             // notification(result.data.result.twostepverify);
-            console.log(result.data.result.twostepverify);
+            // console.log(result.data.result.twostepverify);
         })
     }
 

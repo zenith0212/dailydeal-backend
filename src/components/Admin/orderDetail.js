@@ -3,7 +3,6 @@ import Modal from 'react-bootstrap/Modal';
 import DataTable from 'react-data-table-component';
 import { CommonLabel, ProfileTitle } from '../Store/StyledCom';
 function OrderDetail(props) {
-    console.log(props.detail)
     const shipping_detail = props.detail.shipping;
     const product_items = props.detail.line_items
     const columns = [

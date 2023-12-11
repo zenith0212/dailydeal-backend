@@ -10,7 +10,7 @@ const cookies = new Cookies();
 function FaceLogin() {
     const responseFacebook = async(user) => {
         console.group("facebooklogin")
-        console.log(user);
+        // console.log(user);
         try {
             const result = await axios({
                 method: 'post',
@@ -20,7 +20,7 @@ function FaceLogin() {
                 }
             });
             localStorage.setItem('email', result.data.user.email);
-            console.log(result);
+            // console.log(result);
             console.groupEnd();
             // alert(result.data.user.email);
             cookies.set('TOKEN', result.data.token, {

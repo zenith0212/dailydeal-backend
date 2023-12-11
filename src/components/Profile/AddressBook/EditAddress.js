@@ -56,7 +56,6 @@ function EditAddress() {
             .then((result) => {
                 // console.log('accountInfo', result.data); 
                 // if (location.state.address === 'billing')
-                console.log(result.data.shipping);
                 if(location.state.address === 'shipping'){
                     setForm({
                         ...form,

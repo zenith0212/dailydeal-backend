@@ -29,7 +29,7 @@ function Verify(props) {
             }
         }
         await axios(conf).then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
             localStorage.setItem('email', res.data.email)
 
             cookies.set('TOKEN', res.data.token, {

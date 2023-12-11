@@ -11,11 +11,9 @@ function CountdownTimer() {
             method: 'get',
             url: base_url + 'time'
         }
-        console.group("getting leftTime");
         axios(configTime).then((result) => {
             setLeftTime(result.data.leftTime)
             console.log(result.data.leftTime);
-            console.groupEnd()
         });
     }, [])
     // var time = new Date(); var localTime = new Date(); var usHour =
@@ -32,7 +30,7 @@ function CountdownTimer() {
 
     return (
         <div className='fw-bold'>
-            <Countdown date={Date.now() + leftTime * 1000}/>
+            <Countdown date={Date.now() + leftTime * 1000} autoStart={true}/>
             {/* <Countdown date={Date.now()}/> */}
         </div>
     )

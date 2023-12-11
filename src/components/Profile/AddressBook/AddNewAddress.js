@@ -50,7 +50,7 @@ function AddNewAddress() {
     const addAddress = () =>{
         const {isValid} = validateForm({form, errors, forceTouchErrors: true});
         if (!isValid) return;
-        console.log({url:base_url+"address/"+location.state.address, method:'post', data:{...form, email:email, preferred:preferredAddress}});
+        // console.log({url:base_url+"address/"+location.state.address, method:'post', data:{...form, email:email, preferred:preferredAddress}});
         axios({url:base_url+"address/"+location.state.address, method:'post', data:{...form, email:email, preferred:preferredAddress}})
         .then((result)=>{
             notification(result.data.message);

@@ -281,7 +281,6 @@ function PaginatedItems({ itemsPerPage }) {
                 setProductCount(productCount.data.count);
                 setProducts(products.data);
                 setLoading(false);
-                console.log("zenith ======>", products.data)
             } catch (err) {
                 alert(err);
             }
@@ -366,7 +365,6 @@ function PaginatedItems({ itemsPerPage }) {
 }
 
 function BrandsGateway() {
-    console.log("what is error");
     return (
         <PaginatedItems itemsPerPage={16} />
     )

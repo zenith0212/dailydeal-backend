@@ -55,7 +55,7 @@ function Login(props) {
             [field]: e.target.value,
         };
         setForm(nextFormState);
-        console.log(nextFormState);
+        // console.log(nextFormState);
         if(errors[field].dirty)
             validateForm({
                 form: nextFormState,
@@ -104,13 +104,13 @@ function Login(props) {
     const [login, setLogin] = useState(false);
   const [data, setData] = useState({});
     const responseFacebook = (response) => {
-        console.log(response);
+        // console.log(response);
         setData(response);
         //setPicture(response.picture.data.url);
         if (response.accessToken) {
           
           setLogin(true);
-          console.log(login)
+        //   console.log(login)
         } else {
           setLogin(false);
         }

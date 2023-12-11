@@ -151,7 +151,6 @@ function OurProduct() {
     const [searchTemp, SetSearchTemp] = useState("");
     const [searchKey, SetSearchKey] = useState("");
     const loadData = () => {
-        console.log("serach", searchKey)
         const configP = {
             method: 'get',
             url: base_url + `ourproduct?pageSize=16&page=1&sort=${sortTitle}&search=${searchKey}`,
@@ -160,7 +159,6 @@ function OurProduct() {
         axios(configP)
             .then((result) => {
                 setDailyDealList(result.data);
-                console.log(result.data)
                 setLoading(false);
                 page = 1;
             })
@@ -189,7 +187,6 @@ function OurProduct() {
 
     const showMore = () => {
         page += 1;
-        console.log(page);
         moreData(page)
     }
 

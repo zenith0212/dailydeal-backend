@@ -28,7 +28,7 @@ function WishList() {
         }
         // console.log(config)
         await axios(config).then((res) => {
-            console.log(res.data)
+            // console.log(res.data)
             setProducts(res.data);
             setProductCount(res.data.length);
             setLoading(false);

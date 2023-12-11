@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import SearchBarView from '../HomePage/SearchBarView';
 import CountdownTimer from './countdown/CountdownTimer';
@@ -28,13 +28,13 @@ const TimeCounter = styled.div`
 
 function SearchTime(props) {
     useEffect(() => {
-        console.group("SearchTime")
-        console.groupEnd()
-    },[])
+        // console.group("SearchTime")
+        // console.groupEnd()
+    }, [])
     return (
         <div className='d-flex justify-content-center align-items-center' style={{ height: 40 }}>
             <SearchDiv className='w-25'>
-                <SearchBarView back={props.back} title="Search for a product"/>
+                <SearchBarView back={props.back} title="Search for a product" />
             </SearchDiv>
             <TimeCounter>
                 Deals Refresh in*:

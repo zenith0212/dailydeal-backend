@@ -51,9 +51,7 @@ function AdminNav(){
     // const [orderBadge, setOrederBadge] = useState(32);
     const {order_count} = useCart();
     const location = useLocation();
-    // console.log(order_count)
     const path = location.pathname.replace('/admin/','');
-    console.log(path);
     return(
         <div className='d-grid' style={{color:'#000'}}>
             <Link to="/admin/dashboard"><NavItem className={path==='dashboard'?'active':''}><RiDashboardLine size={20}/>Dashboard</NavItem></Link>

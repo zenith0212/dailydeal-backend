@@ -94,7 +94,6 @@ function HomePage() {
             method: 'get',
             url: base_url + 'time'
         }
-        console.group("getting leftTime");
         axios(configTime).then((result) => {
             setLeftTime(result.data.leftTime)
             // console.log(result.data.leftTime);
@@ -102,7 +101,7 @@ function HomePage() {
         });
     }, [])
     useEffect(() => {
-        if(today.getHours() < 8){
+        if(today.getHours() < 8) {
             configT = {
                 method: 'post',
                 url: base_url + 'deals/today',
@@ -140,12 +139,13 @@ function HomePage() {
         axios(configT)
             .then((result) => {
                 setTodayDeals(result.data);
-            });
+            })
 
         axios(configY)
             .then((result) => {
                 setYesterdayDeals(result.data);
-            });
+            })
+            .catch(error => {console.log(error)});
 
     }, [formatDate(today)]);
 
@@ -176,9 +176,9 @@ function HomePage() {
                     Missed yesterday’s deal?
                 </ProductHeader>
                 {/* <YesterdayItem day={yesterdaydeals} flag={yflag} /> */}
-                <MissedDeal>
+                <MissedDeal className='row'>
                     {
-                        yesterdayDeals.length===0?<MainSubTitle>There aren't Yesterday's deals</MainSubTitle>:
+                        yesterdayDeals.length===0?<MainSubTitle>There isn't Yesterday's deals</MainSubTitle>:
                         yesterdayDeals.map((item, index) => (
                             <YesterdayItem key={index} {...item} flag={yflag} />
                         ))

@@ -39,7 +39,7 @@ function ForgotPass(props) {
     }
     const onSubmit = async (e) => {
         e.preventDefault();
-        console.log(form.email);
+        // console.log(form.email);
 
         if (codeSent) {
             const config = {

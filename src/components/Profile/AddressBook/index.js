@@ -15,7 +15,6 @@ function AddressShow() {
     useEffect(() => {
         axios({ url: base_url + 'address', method: 'get', params: { email: email } })
             .then((result) => {
-                console.log(result.data);
                 if (!!result.data.billing) {
                     setBillingAddress(result.data.billing);
                 } else {
