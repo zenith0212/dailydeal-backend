@@ -53,7 +53,7 @@ const OurItem = (props) => {
     const { dailydeal_list, setDailyDealList } = useCart();
 
     const notify = (message) => toast(message);
-    const [postDate, setPostDate] = useState('2023-01-21');
+    const [postDate, setPostDate] = useState(new Date());
     const [priceEditable, setPriceEditable] = useState(true);
     const [price, setPrice] = useState();
     const dateInputRef = useRef(null);
@@ -81,6 +81,7 @@ const OurItem = (props) => {
     }
 
     const updateProduct = (product_id) => {
+        console.log(postDate)
         const configuration = {
             method: 'put',
             url: base_url + 'ourproduct/' + product_id,
@@ -103,7 +104,8 @@ const OurItem = (props) => {
 
     useEffect(() => {
 
-        setPostDate(formatDate(props.post_date));
+        setPostDate(new Date(props.post_date));
+        console.log(new Date(props.post_date).toISOString());
         setPrice(props.sale_price);
         // console.log(props.post_date)
     }, [props]);
@@ -123,12 +125,13 @@ const OurItem = (props) => {
                             priceEditable ? <ProductPrice>${price}</ProductPrice> :
                                 <ProductPriceInput type='number' placeholder={price} onChange={(e) => setPrice(e.target.value)} />
                         }
-
                         <div className='d-flex align-items-center'>
                             <FiEdit2 size={20} onClick={() => setPriceEditable(!priceEditable)} />
                         </div>
                     </div>
-                    <DatePicker block size='md' placeholder={postDate} onChange={(e) => setPostDate(e.toISOString().slice(0, 10))} />
+                    {/* <DatePicker block size='md' placeholder={postDate} onChange={(e) => {setPostDate(e.toISOString().slice(0, 10))}} /> */}
+                    {/* <DatePicker block size='md' placeholder={postDate} onChange={(e) => {console.log(e.toLocaleDateString().replaceAll("/", "-"));setPostDate(e.toLocaleDateString().replaceAll("/", "-"))}} /> */}
+                    <DatePicker block size='md' placeholder={postDate.toLocaleDateString().replaceAll("/", "-")} onChange={(e) => {console.log(e.toLocaleDateString().replaceAll("/", "-"));setPostDate(e)}} />
                     <div className='d-flex justify-content-between'>
                         <ConfirmBtn onClick={() => updateProduct(props.product_id)}>Confirm</ConfirmBtn>
                         <DeleteBtn onClick={() => deleteOurProduct(props.product_id)}>Delete</DeleteBtn>
@@ -158,6 +161,7 @@ function OurProduct() {
         // console.log(configP)
         axios(configP)
             .then((result) => {
+                console.log(result.data);
                 setDailyDealList(result.data);
                 setLoading(false);
                 page = 1;

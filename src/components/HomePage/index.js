@@ -138,6 +138,7 @@ function HomePage() {
 
         axios(configT)
             .then((result) => {
+                console.log("zenith --->", result.data)
                 setTodayDeals(result.data);
             })
 

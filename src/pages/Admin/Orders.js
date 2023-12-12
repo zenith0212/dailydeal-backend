@@ -172,8 +172,8 @@ function Orders() {
             <h2>Orders</h2>
             <div className='d-flex w-100 bg-white my-2'>
                 {
-                    TagName.map((item) => (
-                        <TagItem id={item.id} onClick={() => OptionTag(item.name)}>{item.name}</TagItem>
+                    TagName.map((item, index) => (
+                        <TagItem key={index} id={item.id} onClick={() => OptionTag(item.name)}>{item.name}</TagItem>
                     ))
                 }
             </div>

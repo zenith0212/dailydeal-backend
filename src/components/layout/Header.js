@@ -240,6 +240,7 @@ function Header() {
         cookies.remove("TOKEN", { path: "/" });
         // redirect user to the landing page
         localStorage.removeItem("email");
+        localStorage.removeItem("state");
         window.location.href = "/";
     }
     useEffect(() => {
